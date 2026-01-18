@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GCRIPT - Creative Design Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  </head>
+  <body>
+    <!-- SVG Definitions -->
+    <svg class="svg-defs" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <!-- Gradient 1: Purple to Pink -->
+        <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#6366f1"/>
+          <stop offset="50%" style="stop-color:#8b5cf6"/>
+          <stop offset="100%" style="stop-color:#ec4899"/>
+        </linearGradient>
+        <!-- Gradient 2: Blue to Cyan -->
+        <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#3b82f6"/>
+          <stop offset="100%" style="stop-color:#06b6d4"/>
+        </linearGradient>
+        <!-- Gradient 3: Orange to Pink -->
+        <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#f97316"/>
+          <stop offset="100%" style="stop-color:#ec4899"/>
+        </linearGradient>
+        <!-- Gradient 4: Dark -->
+        <linearGradient id="gradient4" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#1e1b4b"/>
+          <stop offset="100%" style="stop-color:#312e81"/>
+        </linearGradient>
+        <!-- Radial Gradient -->
+        <radialGradient id="radialGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" style="stop-color:#8b5cf6;stop-opacity:0.3"/>
+          <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:0"/>
+        </radialGradient>
+      </defs>
+    </svg>
+
+    <!-- Loading Screen -->
+    <div id="loader">
+      <div class="loader-content">
+        <img src="/logo.png" alt="GCRIPT" class="loader-logo" />
+        <div class="loader-bar">
+          <div class="loader-progress"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Background Grid Canvas -->
+    <canvas id="grid-canvas"></canvas>
+
+    <div id="app">
+      <!-- Navigation -->
+      <nav class="nav">
+        <a href="#" class="nav-logo"><img src="/logo.png" alt="GCRIPT" /></a>
+        <div class="nav-links">
+          <a href="#services">Services</a>
+          <a href="#work">Work</a>
+          <a href="#about">About</a>
+          <a href="#contact" class="nav-cta">Get in Touch</a>
+        </div>
+        <div class="nav-menu-btn">
+          <span></span>
+          <span></span>
+        </div>
+      </nav>
+
+      <!-- Hero Section -->
+      <section class="hero">
+        <!-- Abstract SVG Background Elements -->
+        <div class="hero-bg-elements">
+          <!-- Blob 2 -->
+          <svg class="hero-blob blob-2" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="url(#gradient2)" d="M39.9,-65.7C54.1,-60.5,69.4,-54.3,77.4,-43.1C85.4,-31.9,86,-15.9,83.4,-1.5C80.8,12.9,75,25.9,67.4,38.1C59.8,50.4,50.4,61.9,38.4,69.4C26.5,76.9,13.2,80.3,-0.6,81.4C-14.5,82.4,-29,81,-41.6,74.1C-54.2,67.2,-64.9,54.7,-72.2,40.8C-79.5,26.9,-83.4,13.4,-83.2,0.1C-83,-13.2,-78.6,-26.5,-71.3,-38.2C-64,-49.9,-53.7,-60.2,-41.5,-66.5C-29.2,-72.9,-14.6,-75.4,-0.7,-74.2C13.2,-73,25.7,-68.2,39.9,-65.7Z" transform="translate(100 100)" />
+          </svg>
+          <!-- Circle Ring -->
+          <svg class="hero-ring ring-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="100" cy="100" r="80" fill="none" stroke="url(#gradient1)" stroke-width="1" opacity="0.3"/>
+            <circle cx="100" cy="100" r="60" fill="none" stroke="url(#gradient2)" stroke-width="1" opacity="0.2"/>
+            <circle cx="100" cy="100" r="40" fill="none" stroke="url(#gradient3)" stroke-width="1" opacity="0.1"/>
+          </svg>
+          <!-- Dots Pattern -->
+          <svg class="hero-dots dots-1" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <pattern id="dotPattern" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+              <circle cx="2" cy="2" r="1.5" fill="#6366f1" opacity="0.3"/>
+            </pattern>
+            <rect width="100" height="100" fill="url(#dotPattern)"/>
+          </svg>
+          <!-- Abstract Lines -->
+          <svg class="hero-lines lines-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10,100 Q50,50 100,100 T190,100" fill="none" stroke="url(#gradient1)" stroke-width="2" opacity="0.2"/>
+            <path d="M10,120 Q50,70 100,120 T190,120" fill="none" stroke="url(#gradient2)" stroke-width="1.5" opacity="0.15"/>
+            <path d="M10,140 Q50,90 100,140 T190,140" fill="none" stroke="url(#gradient3)" stroke-width="1" opacity="0.1"/>
+          </svg>
+          <!-- Glow Effect -->
+          <div class="hero-glow glow-2"></div>
+        </div>
+
+        <div class="hero-wrapper">
+          <div class="hero-content">
+            <div class="hero-label reveal-up">Creative Design Studio</div>
+            <h1 class="hero-title">
+              <span class="reveal-up delay-1">We craft</span>
+              <span class="reveal-up delay-2">digital experiences</span>
+              <span class="reveal-up delay-3">that matter.</span>
+            </h1>
+            <p class="hero-description reveal-up delay-4">
+              From web frontends to print designs, we transform your vision into stunning visual solutions.
+            </p>
+            <div class="hero-cta reveal-up delay-5">
+              <a href="#contact" class="btn btn-primary">Start a Project</a>
+              <a href="#work" class="btn btn-secondary">View Our Work</a>
+            </div>
+          </div>
+          <div class="hero-image reveal-up delay-3">
+            <img src="/hero.png" alt="Creative Design" />
+          </div>
+        </div>
+        <div class="hero-scroll">
+          <span>Scroll</span>
+          <div class="scroll-line"></div>
+        </div>
+      </section>
+
+      <!-- Marquee -->
+      <div class="marquee">
+        <div class="marquee-content">
+          <span>Web Design</span>
+          <span class="dot"></span>
+          <span>Flyers</span>
+          <span class="dot"></span>
+          <span>T-Shirt Designs</span>
+          <span class="dot"></span>
+          <span>Presentations</span>
+          <span class="dot"></span>
+          <span>Social Media</span>
+          <span class="dot"></span>
+          <span>Ticket Designs</span>
+          <span class="dot"></span>
+          <span>Web Design</span>
+          <span class="dot"></span>
+          <span>Flyers</span>
+          <span class="dot"></span>
+          <span>T-Shirt Designs</span>
+          <span class="dot"></span>
+          <span>Presentations</span>
+          <span class="dot"></span>
+          <span>Social Media</span>
+          <span class="dot"></span>
+          <span>Ticket Designs</span>
+          <span class="dot"></span>
+        </div>
+      </div>
+
+      <!-- Services Section -->
+      <section id="services" class="services">
+        <!-- Services Background Elements -->
+        <div class="section-bg-elements">
+          <svg class="services-shape shape-1" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <polygon points="100,10 190,60 190,140 100,190 10,140 10,60" fill="none" stroke="url(#gradient1)" stroke-width="1" opacity="0.15"/>
+          </svg>
+          <svg class="services-shape shape-2" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect x="10" y="10" width="80" height="80" rx="10" fill="none" stroke="url(#gradient2)" stroke-width="1" opacity="0.1" transform="rotate(45 50 50)"/>
+          </svg>
+          <div class="section-glow glow-purple"></div>
+        </div>
+
+        <div class="section-header">
+          <span class="section-label scroll-reveal">What We Do</span>
+          <h2 class="section-title scroll-reveal">Services</h2>
+        </div>
+        <div class="services-grid">
+          <div class="service-card scroll-reveal" data-bg="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80">
+            <div class="service-bg"></div>
+            <div class="service-number">01</div>
+            <h3 class="service-title">Web Frontends</h3>
+            <p class="service-desc">Modern, responsive websites that captivate your audience and drive results.</p>
+          </div>
+          <div class="service-card scroll-reveal" data-bg="https://images.unsplash.com/photo-1586075010923-2dd4570fb338?w=600&q=80">
+            <div class="service-bg"></div>
+            <div class="service-number">02</div>
+            <h3 class="service-title">Flyer Designs</h3>
+            <p class="service-desc">Eye-catching flyers that communicate your message with impact.</p>
+          </div>
+          <div class="service-card scroll-reveal" data-bg="https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=600&q=80">
+            <div class="service-bg"></div>
+            <div class="service-number">03</div>
+            <h3 class="service-title">T-Shirt Designs</h3>
+            <p class="service-desc">Custom apparel graphics that make your brand wearable.</p>
+          </div>
+          <div class="service-card scroll-reveal" data-bg="https://images.unsplash.com/photo-1557804506-669a67965ba0?w=600&q=80">
+            <div class="service-bg"></div>
+            <div class="service-number">04</div>
+            <h3 class="service-title">Presentation Templates</h3>
+            <p class="service-desc">Professional slide decks that elevate your business pitches.</p>
+          </div>
+          <div class="service-card scroll-reveal" data-bg="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600&q=80">
+            <div class="service-bg"></div>
+            <div class="service-number">05</div>
+            <h3 class="service-title">Ticket Designs</h3>
+            <p class="service-desc">Memorable event tickets that build anticipation.</p>
+          </div>
+          <div class="service-card scroll-reveal" data-bg="https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?w=600&q=80">
+            <div class="service-bg"></div>
+            <div class="service-number">06</div>
+            <h3 class="service-title">Social Media Posts</h3>
+            <p class="service-desc">Scroll-stopping content that engages your followers.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Work Section -->
+      <section id="work" class="work">
+        <!-- Work Background Elements -->
+        <div class="section-bg-elements">
+          <svg class="work-shape shape-3" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="url(#gradient3)" opacity="0.1" d="M47.5,-57.2C59.9,-52.3,67.5,-36.5,71.8,-19.8C76.2,-3.1,77.3,14.4,71.1,29.1C64.9,43.8,51.4,55.6,36.3,63.4C21.2,71.2,4.5,74.9,-12.8,73.9C-30.1,72.9,-48,67.1,-59.4,55.1C-70.8,43.1,-75.6,24.8,-76.3,6.6C-77,-11.5,-73.6,-29.5,-64.1,-43.1C-54.6,-56.7,-39,-65.9,-23.6,-69.3C-8.2,-72.7,7,-70.3,21.4,-65.1C35.8,-59.9,49.4,-51.9,47.5,-57.2Z" transform="translate(100 100)" />
+          </svg>
+          <svg class="work-shape shape-4" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="50" cy="50" r="40" fill="none" stroke="url(#gradient2)" stroke-width="0.5" stroke-dasharray="5,5" opacity="0.2"/>
+          </svg>
+        </div>
+
+        <div class="section-header">
+          <span class="section-label scroll-reveal">Portfolio</span>
+          <h2 class="section-title scroll-reveal">Selected Work</h2>
+        </div>
+        <div class="work-grid">
+          <div class="work-item scroll-reveal">
+            <div class="work-image">
+              <div class="work-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="3" width="20" height="14" rx="2" stroke="currentColor" stroke-width="1"/>
+                  <path d="M8 21h8M12 17v4" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Web Design</span>
+              <h3 class="work-title">Project Alpha</h3>
+            </div>
+          </div>
+          <div class="work-item scroll-reveal">
+            <div class="work-image">
+              <div class="work-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="1"/>
+                  <path d="M12 8v4l2 2" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Brand Identity</span>
+              <h3 class="work-title">Project Beta</h3>
+            </div>
+          </div>
+          <div class="work-item scroll-reveal">
+            <div class="work-image">
+              <div class="work-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="3" y="3" width="18" height="18" rx="2" stroke="currentColor" stroke-width="1"/>
+                  <path d="M3 9h18M9 9v12" stroke="currentColor" stroke-width="1"/>
+                </svg>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Print Design</span>
+              <h3 class="work-title">Project Gamma</h3>
+            </div>
+          </div>
+          <div class="work-item scroll-reveal">
+            <div class="work-image">
+              <div class="work-placeholder">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="2" y="2" width="20" height="20" rx="5" stroke="currentColor" stroke-width="1"/>
+                  <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1"/>
+                </svg>
+              </div>
+            </div>
+            <div class="work-info">
+              <span class="work-category">Social Media</span>
+              <h3 class="work-title">Project Delta</h3>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- About Section -->
+      <section id="about" class="about">
+        <!-- About Background Elements -->
+        <div class="section-bg-elements">
+          <svg class="about-shape shape-5" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path d="M100,20 L180,100 L100,180 L20,100 Z" fill="none" stroke="url(#gradient1)" stroke-width="1" opacity="0.1"/>
+            <path d="M100,40 L160,100 L100,160 L40,100 Z" fill="none" stroke="url(#gradient2)" stroke-width="1" opacity="0.08"/>
+            <path d="M100,60 L140,100 L100,140 L60,100 Z" fill="none" stroke="url(#gradient3)" stroke-width="1" opacity="0.06"/>
+          </svg>
+          <div class="section-glow glow-blue"></div>
+        </div>
+
+        <div class="about-content">
+          <div class="about-left scroll-reveal">
+            <span class="section-label">About Us</span>
+            <h2 class="about-title">We believe in the power of great design.</h2>
+            <img src="/logo.png" alt="GCRIPT" class="about-logo" />
+          </div>
+          <div class="about-right scroll-reveal">
+            <p>GCRIPT is a creative design studio specializing in commercial projects. We blend aesthetic excellence with strategic thinking to deliver designs that not only look stunning but also achieve your business goals.</p>
+            <p>From digital interfaces to print materials, we approach every project with passion and precision.</p>
+            <div class="about-stats">
+              <div class="stat">
+                <span class="stat-number">50+</span>
+                <span class="stat-label">Projects Completed</span>
+              </div>
+              <div class="stat">
+                <span class="stat-number">30+</span>
+                <span class="stat-label">Happy Clients</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section id="contact" class="contact">
+        <!-- Contact Background Elements -->
+        <div class="contact-bg-elements">
+          <svg class="contact-shape shape-6" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="200" cy="200" r="150" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+            <circle cx="200" cy="200" r="120" fill="none" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+            <circle cx="200" cy="200" r="90" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1"/>
+          </svg>
+          <svg class="contact-shape shape-7" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <path fill="rgba(255,255,255,0.05)" d="M44.7,-76.4C58.8,-69.2,71.8,-59.1,79.6,-45.8C87.4,-32.6,90,-16.3,88.5,-0.9C87,14.6,81.4,29.2,73.1,42.2C64.8,55.2,53.8,66.7,40.4,74.5C27,82.3,13.5,86.5,-1.1,88.4C-15.7,90.3,-31.4,89.9,-44.2,82.6C-57,75.3,-66.9,61.1,-74.8,45.8C-82.7,30.6,-88.5,15.3,-88.9,-0.2C-89.3,-15.8,-84.2,-31.5,-75.6,-44.8C-67,-58,-54.8,-68.7,-41.1,-76.2C-27.4,-83.7,-13.7,-87.9,0.8,-89.3C15.3,-90.7,30.6,-89.3,44.7,-76.4Z" transform="translate(100 100)" />
+          </svg>
+          <div class="contact-glow"></div>
+        </div>
+
+        <div class="contact-content">
+          <span class="section-label scroll-reveal">Get Started</span>
+          <h2 class="contact-title scroll-reveal">Have a project in mind?</h2>
+          <p class="contact-desc scroll-reveal">Let's create something amazing together.</p>
+          <a href="mailto:hello@gcript.com" class="contact-email scroll-reveal">hello@gcript.com</a>
+          <div class="contact-cta scroll-reveal">
+            <a href="mailto:hello@gcript.com" class="btn btn-primary btn-large">Start a Conversation</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer class="footer">
+        <div class="footer-content">
+          <div class="footer-left">
+            <a href="#" class="footer-logo"><img src="/logo.png" alt="GCRIPT" /></a>
+            <p>Creative Design Studio</p>
+          </div>
+          <div class="footer-right">
+            <div class="footer-links">
+              <a href="#services">Services</a>
+              <a href="#work">Work</a>
+              <a href="#about">About</a>
+              <a href="#contact">Contact</a>
+            </div>
+            <div class="footer-social">
+              <a href="#">Twitter</a>
+              <a href="#">Instagram</a>
+              <a href="#">LinkedIn</a>
+            </div>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <p>&copy; 2026 GCRIPT. All rights reserved.</p>
+        </div>
+      </footer>
+    </div>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
