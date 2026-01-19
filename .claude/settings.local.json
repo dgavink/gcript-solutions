@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "WebFetch(domain:perfee-dev.vercel.app)",
-      "WebFetch(domain:www.affinity.studio)",
-      "Bash(npm install:*)"
-    ]
-  }
-}

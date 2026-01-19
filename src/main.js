@@ -148,49 +148,37 @@ function initServiceCardBg() {
   })
 }
 
-// ===== Service Cards Auto Cycle =====
+// ===== Service Cards Image Reveal on Scroll =====
 function initServiceCardsCycle() {
   const serviceCards = document.querySelectorAll('.service-card')
-  let currentIndex = 0
-  let cycleInterval = null
-
-  function activateCard(index) {
-    // Remove active class from all cards
-    serviceCards.forEach(card => card.classList.remove('active'))
-    // Add active class to current card
-    serviceCards[index].classList.add('active')
-  }
-
-  function startCycle() {
-    // Activate first card immediately
-    activateCard(currentIndex)
-
-    // Cycle through cards every 2 seconds
-    cycleInterval = setInterval(() => {
-      currentIndex = (currentIndex + 1) % serviceCards.length
-      activateCard(currentIndex)
-    }, 2000)
-  }
-
-  // Start cycling when services section is in view
   const servicesSection = document.getElementById('services')
+  let hasRevealed = false
+
+  function revealCards() {
+    serviceCards.forEach((card, index) => {
+      setTimeout(() => {
+        card.classList.add('image-revealed')
+      }, index * 150) // Stagger each card by 150ms
+    })
+  }
+
+  function hideCards() {
+    serviceCards.forEach(card => {
+      card.classList.remove('image-revealed')
+    })
+    hasRevealed = false
+  }
 
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        startCycle()
-      } else {
-        // Stop cycling when out of view
-        if (cycleInterval) {
-          clearInterval(cycleInterval)
-          cycleInterval = null
-        }
-        // Remove active class from all
-        serviceCards.forEach(card => card.classList.remove('active'))
-        currentIndex = 0
+      if (entry.isIntersecting && !hasRevealed) {
+        hasRevealed = true
+        revealCards()
+      } else if (!entry.isIntersecting && hasRevealed) {
+        hideCards()
       }
     })
-  }, { threshold: 0.2 })
+  }, { threshold: 0.3 })
 
   if (servicesSection) {
     observer.observe(servicesSection)
@@ -254,11 +242,32 @@ function splitText(element) {
 function initMobileMenu() {
   const menuBtn = document.querySelector('.nav-menu-btn')
   const navLinks = document.querySelector('.nav-links')
+  const navLinksItems = document.querySelectorAll('.nav-links a')
 
-  if (menuBtn) {
+  if (menuBtn && navLinks) {
+    // Toggle menu on button click
     menuBtn.addEventListener('click', () => {
       menuBtn.classList.toggle('active')
       navLinks.classList.toggle('mobile-open')
+      document.body.style.overflow = navLinks.classList.contains('mobile-open') ? 'hidden' : ''
+    })
+
+    // Close menu when a link is clicked
+    navLinksItems.forEach(link => {
+      link.addEventListener('click', () => {
+        menuBtn.classList.remove('active')
+        navLinks.classList.remove('mobile-open')
+        document.body.style.overflow = ''
+      })
+    })
+
+    // Close menu on escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && navLinks.classList.contains('mobile-open')) {
+        menuBtn.classList.remove('active')
+        navLinks.classList.remove('mobile-open')
+        document.body.style.overflow = ''
+      }
     })
   }
 }
@@ -426,6 +435,298 @@ function initCursor() {
   })
 }
 
+// ===== Image Reveal Animation =====
+function initImageReveal() {
+  const heroImage = document.querySelector('.hero-image')
+  const workItems = document.querySelectorAll('.work-item')
+
+  // Reveal hero image after loader
+  setTimeout(() => {
+    if (heroImage) {
+      heroImage.classList.add('revealed')
+    }
+  }, 2000)
+
+  // Reveal work items on scroll
+  const workObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        // Stagger the reveal based on position
+        const item = entry.target
+        setTimeout(() => {
+          item.classList.add('revealed')
+        }, 100)
+        workObserver.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.2, rootMargin: '0px 0px -50px 0px' })
+
+  workItems.forEach(item => {
+    workObserver.observe(item)
+  })
+}
+
+// ===== Advanced Parallax for Images =====
+function initAdvancedParallax() {
+  const parallaxElements = document.querySelectorAll('.parallax-image img, .hero-image img')
+
+  if (parallaxElements.length === 0) return
+
+  let ticking = false
+
+  function updateParallax() {
+    const scrolled = window.scrollY
+    const windowHeight = window.innerHeight
+
+    parallaxElements.forEach(el => {
+      const rect = el.parentElement.getBoundingClientRect()
+      const elementCenter = rect.top + rect.height / 2
+      const distanceFromCenter = elementCenter - windowHeight / 2
+      const parallaxSpeed = 0.15
+      const translateY = distanceFromCenter * parallaxSpeed
+
+      el.style.transform = `translateY(${translateY}px) scale(1.1)`
+    })
+
+    ticking = false
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateParallax)
+      ticking = true
+    }
+  }, { passive: true })
+}
+
+// ===== Clip Path Reveal Observer =====
+function initClipReveal() {
+  const clipElements = document.querySelectorAll('.clip-reveal, .clip-circle-reveal, .clip-diamond-reveal, .clip-diagonal-reveal, .clip-inset-reveal')
+
+  if (clipElements.length === 0) return
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setTimeout(() => {
+          entry.target.classList.add('revealed')
+        }, 100)
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.3 })
+
+  clipElements.forEach(el => observer.observe(el))
+}
+
+// ===== Tilt Effect on Mouse Move =====
+function initTiltEffect() {
+  const tiltElements = document.querySelectorAll('.work-item, .service-card')
+
+  tiltElements.forEach(el => {
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect()
+      const x = e.clientX - rect.left
+      const y = e.clientY - rect.top
+      const centerX = rect.width / 2
+      const centerY = rect.height / 2
+
+      const rotateX = (y - centerY) / 20
+      const rotateY = (centerX - x) / 20
+
+      el.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`
+    })
+
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)'
+    })
+  })
+}
+
+// ===== Smooth Scroll Progress for Images =====
+function initScrollProgress() {
+  const images = document.querySelectorAll('.zoom-on-scroll')
+
+  if (images.length === 0) return
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in-view')
+      }
+    })
+  }, { threshold: 0.1 })
+
+  images.forEach(img => observer.observe(img))
+}
+
+// ===== Stagger Animation Helper =====
+function staggerReveal(elements, baseDelay = 100) {
+  elements.forEach((el, index) => {
+    setTimeout(() => {
+      el.classList.add('revealed')
+    }, index * baseDelay)
+  })
+}
+
+// ===== Work Cards Background Reveal =====
+function initWorkCardBg() {
+  const workCards = document.querySelectorAll('.work-card')
+
+  workCards.forEach(card => {
+    const bgUrl = card.dataset.bg
+    if (bgUrl) {
+      card.querySelector('.work-card-bg').style.backgroundImage = `url(${bgUrl})`
+    }
+  })
+}
+
+// ===== Work Card Zoom on Click =====
+function initWorkCardZoom() {
+  const workCards = document.querySelectorAll('.work-card')
+  const overlay = document.querySelector('.work-card-overlay')
+  let expandedCard = null
+  let originalStyles = {}
+
+  workCards.forEach(card => {
+    // Add close button to each card
+    const closeBtn = document.createElement('div')
+    closeBtn.className = 'work-card-close'
+    card.appendChild(closeBtn)
+
+    // Click to expand
+    card.addEventListener('click', (e) => {
+      if (e.target.classList.contains('work-card-close')) {
+        closeCard()
+        return
+      }
+
+      if (expandedCard === card) return
+
+      expandCard(card)
+    })
+
+    // Close button click
+    closeBtn.addEventListener('click', (e) => {
+      e.stopPropagation()
+      closeCard()
+    })
+  })
+
+  // Click overlay to close
+  overlay.addEventListener('click', closeCard)
+
+  // ESC key to close
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && expandedCard) {
+      closeCard()
+    }
+  })
+
+  function expandCard(card) {
+    // Get current position
+    const rect = card.getBoundingClientRect()
+
+    // Store original styles
+    originalStyles = {
+      top: rect.top + 'px',
+      left: rect.left + 'px',
+      width: rect.width + 'px',
+      height: rect.height + 'px'
+    }
+
+    // Set initial fixed position
+    card.style.position = 'fixed'
+    card.style.top = originalStyles.top
+    card.style.left = originalStyles.left
+    card.style.width = originalStyles.width
+    card.style.height = originalStyles.height
+    card.style.margin = '0'
+    card.classList.add('expanding')
+
+    // Show overlay
+    overlay.classList.add('active')
+
+    // Calculate center position - scale up keeping aspect ratio
+    const viewportWidth = window.innerWidth
+    const viewportHeight = window.innerHeight
+    const scaleFactor = 2.5
+    const expandedWidth = rect.width * scaleFactor
+    const expandedHeight = rect.height * scaleFactor
+    const centerX = (viewportWidth - expandedWidth) / 2
+    const centerY = (viewportHeight - expandedHeight) / 2
+
+    // Animate to center
+    requestAnimationFrame(() => {
+      card.classList.add('expanded')
+      card.style.top = centerY + 'px'
+      card.style.left = centerX + 'px'
+      card.style.width = expandedWidth + 'px'
+      card.style.height = expandedHeight + 'px'
+    })
+
+    expandedCard = card
+    document.body.style.overflow = 'hidden'
+  }
+
+  function closeCard() {
+    if (!expandedCard) return
+
+    const card = expandedCard
+
+    // Animate back to original position
+    card.style.top = originalStyles.top
+    card.style.left = originalStyles.left
+    card.style.width = originalStyles.width
+    card.style.height = originalStyles.height
+
+    // Hide overlay
+    overlay.classList.remove('active')
+
+    // After animation, reset styles
+    setTimeout(() => {
+      card.classList.remove('expanded', 'expanding')
+      card.style.position = ''
+      card.style.top = ''
+      card.style.left = ''
+      card.style.width = ''
+      card.style.height = ''
+      card.style.margin = ''
+      document.body.style.overflow = ''
+    }, 500)
+
+    expandedCard = null
+  }
+}
+
+function initWorkCardsCycle() {
+  const workCategories = document.querySelectorAll('.work-category')
+
+  workCategories.forEach(category => {
+    const cards = category.querySelectorAll('.work-card')
+    if (cards.length === 0) return
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          // Reveal all cards in this category with stagger
+          cards.forEach((card, index) => {
+            setTimeout(() => {
+              card.classList.add('image-revealed')
+            }, index * 150)
+          })
+          observer.unobserve(entry.target)
+        }
+      })
+    }, {
+      threshold: 0.2,
+      rootMargin: '0px 0px -50px 0px'
+    })
+
+    observer.observe(category)
+  })
+}
+
 // ===== Initialize All Functions =====
 document.addEventListener('DOMContentLoaded', () => {
   // Pause hero animations until loader completes
@@ -446,9 +747,73 @@ document.addEventListener('DOMContentLoaded', () => {
   initCounterAnimation()
   initGridCanvas()
 
-  // Uncomment for custom cursor effect
-  // initCursor()
+  // New animation functions
+  initImageReveal()
+  initAdvancedParallax()
+  initClipReveal()
+  initTiltEffect()
+  initScrollProgress()
+  initWorkCardBg()
+  initWorkCardsCycle()
+  initWorkCardZoom()
+  initDynamicBackground()
+
 })
+
+// ===== Dynamic Background Color Transitions =====
+function initDynamicBackground() {
+  const bgLayer = document.querySelector('.bg-color-layer')
+  const blobs = document.querySelectorAll('.bg-color-blob')
+  const sections = document.querySelectorAll('[data-bg-color]')
+
+  if (!bgLayer || sections.length === 0) return
+
+  let currentColor = '#ffffff'
+
+  function updateBackgroundColor(color) {
+    if (color === currentColor) return
+    currentColor = color
+
+    // Update the background layer color
+    bgLayer.style.backgroundColor = color
+
+    // Update blob colors for the splash effect
+    blobs.forEach(blob => {
+      blob.style.setProperty('--blob-color', color)
+      blob.classList.add('active')
+    })
+  }
+
+  // Create intersection observer for each section
+  const observerOptions = {
+    root: null,
+    rootMargin: '-40% 0px -40% 0px',
+    threshold: 0
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const color = entry.target.getAttribute('data-bg-color')
+        if (color) {
+          updateBackgroundColor(color)
+        }
+      }
+    })
+  }, observerOptions)
+
+  sections.forEach(section => {
+    observer.observe(section)
+  })
+
+  // Initial state
+  setTimeout(() => {
+    blobs.forEach(blob => {
+      blob.style.setProperty('--blob-color', '#ffffff')
+      blob.classList.add('active')
+    })
+  }, 2000)
+}
 
 // ===== Preload Optimization =====
 window.addEventListener('load', () => {
